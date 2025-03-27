@@ -1,0 +1,5 @@
+IDE - Integrated Development Environment
+OOP - Object Oriented Programming
+FIFO - First in First Out
+ML - Machine Learning
+AI - Artificial Intelligence
