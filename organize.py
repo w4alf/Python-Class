@@ -14,7 +14,7 @@ CATEGORIES = {
 }
 
 def organize_desktop():
-    desktop_path = 'C:/Users/cbrav/Documents'  # Get the desktop path
+    desktop_path = 'C:/Users/cbrav/Documents/'  # Get the desktop path
     print("printing desktop path", desktop_path)
       
 

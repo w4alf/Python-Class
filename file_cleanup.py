@@ -1,22 +1,45 @@
-
-#import the os module to work with files and directories
 import os
+import shutil
 
-#set paths for the original and destination folders
-folder_original = 'C:/users/cbrav/Documents/'
-folder_destination = 'C:/users/cbrav/Documents/Cleaned_Up/'
+# Define the categories and their associated file extensions
+CATEGORIES = {
+    "Images": [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".svg", ".tiff"],
+    "Documents": [".pdf", ".doc", ".docx", ".txt", ".xls", ".xlsx", ".ppt", ".pptx"],
+    "Archives": [".zip", ".tar", ".gz", ".rar", ".7z"],
+    "Videos": [".mp4", ".mov", ".avi", ".mkv", ".flv"],
+    "Audio": [".mp3", ".wav", ".aac", ".ogg"],
+    "Code": [".py", ".js", ".html", ".css", ".java", ".cpp", ".cs", ".rb"],
+    "Executables": [".exe", ".bat", ".sh", ".app"],
+    "Others": []
+}
 
-# makes a new directory if it does not exist
-os.mkdir(folder_destination)    
-
-# loop through the files in the original folder
-# and move them to the destination folder
-for entry in os.scandir(folder_original):
-    location_original = os.path.join(folder_original, entry.name)
-    location_destination = os.path.join(folder_destination, entry.name)
-    # check if the entry is a file, we don't want to move directories
-    if os.path.isfile(location_original):
-        # move the file to the destination folder, rename can change the name of the file, but you can also use it to move files
-        os.rename(location_original, location_destination)
-
-
+def organize_folder():
+    # Folder path to organize
+    folder_path = 'C:/Users/cbrav/Documents/'
+    
+    # List all files (ignoring directories) in the folder
+    files = [f for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f))]
+    
+    for file in files:
+        file_path = os.path.join(folder_path, file)
+        file_ext = os.path.splitext(file)[1].lower()
+        
+        # Determine the appropriate category
+        target_category = "Others"
+        for category, extensions in CATEGORIES.items():
+            if file_ext in extensions:
+                target_category = category
+                break
+        
+        # Create the category folder if it doesn't exist
+        target_folder = os.path.join(folder_path, target_category)
+        if not os.path.exists(target_folder):
+            os.makedirs(target_folder)
+        
+        # Move the file to the category folder
+        shutil.move(file_path, os.path.join(target_folder, file))
+    
+    print("Files in '{}' organized successfully!".format(folder_path))
+#
+#if __name__ == "__main__":
+organize_folder()
